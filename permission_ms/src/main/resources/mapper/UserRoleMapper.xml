@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blb.permission_ms.mapper.UserRoleMapper">
+
+    <resultMap id="userRole" type="UserRole">
+        <association property="role" javaType="Role">
+            <result property="id" column="role_id"></result>
+            <result property="name" column="name"></result>
+        </association>
+        <association property="user" javaType="User">
+            <result property="id" column="user_id"></result>
+            <result property="username" column="username"></result>
+        </association>
+    </resultMap>
+
+    <select id="selectRolePage" resultMap="userRole">
+        select ur.id,u.id user_id,u.username,r.id role_id,r.name
+        from role r join user_role ur on r.id=ur.role_id
+                    join user u on u.id=ur.user_id
+    </select>
+</mapper>
